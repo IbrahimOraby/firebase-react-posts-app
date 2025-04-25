@@ -1,14 +1,20 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { logoutUser } from "../../services/auth_service";
 
 export default function Posts() {
+	const navigate = useNavigate();
+
+	const handleLogout = async () => {
+		await logoutUser();
+		navigate("/login");
+	};
 	return (
 		<>
 			<div>
-				<p>Welcome</p>
-				<p>
-					If you wanna <Link>logout</Link>
-				</p>
+				<h2>Welcome,</h2>
+				<p>If you wanna logout</p>
+				<button onClick={handleLogout}>Logout</button>
 			</div>
 		</>
 	);
