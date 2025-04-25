@@ -6,8 +6,8 @@ import {
 } from "firebase/auth";
 
 // Sign up
-export const registerUser = (email, password) => {
-	return createUserWithEmailAndPassword(auth, email, password);
+export const registerUser = (userName, email, password) => {
+	return createUserWithEmailAndPassword(auth, userName, email, password);
 };
 
 // Login

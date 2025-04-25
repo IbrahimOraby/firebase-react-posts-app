@@ -6,11 +6,13 @@ import "../styles/form.css";
 export default function SignUpForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [userName, setUserName] = useState("");
+
 	const navigate = useNavigate();
 
-	const handleSignUp = async (email, password) => {
+	const handleSignUp = async (userName, email, password) => {
 		try {
-			await registerUser(email, password);
+			await registerUser(userName, email, password);
 			alert("You signed up successfully");
 			navigate("/posts");
 		} catch (err) {
@@ -27,6 +29,14 @@ export default function SignUpForm() {
 			<div className="container">
 				<form onSubmit={onSubmit} className="auth-form">
 					<h2>Sign Up</h2>
+					<div>
+						<input
+							type="text"
+							value={userName}
+							onChange={(e) => setUserName(e.target.value)}
+							placeholder="Username"
+						/>
+					</div>
 					<div>
 						<input
 							type="email"
