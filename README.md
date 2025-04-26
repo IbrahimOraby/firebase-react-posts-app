@@ -34,7 +34,7 @@ A simple React + Firebase app that allows users to:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/posts-app.git
+   git clone https://github.com/IbrahimOraby/firebase-react-posts-app.git
    cd posts-app
 
    ```
