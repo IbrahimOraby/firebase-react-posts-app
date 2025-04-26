@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { logoutUser } from "../../services/auth_service";
-import { createPost, getPosts } from "../../services/firestore_service";
+import {
+	createPost,
+	getPosts,
+	deletePost
+} from "../../services/firestore_service";
 import { auth } from "../../firebaseConfig";
 
 export default function Posts() {
@@ -23,6 +27,10 @@ export default function Posts() {
 		} else {
 			console.error("No user signed in");
 		}
+	};
+
+	const handleDeletePost = (pid) => {
+		deletePost(pid);
 	};
 
 	useEffect(() => {
@@ -63,7 +71,9 @@ export default function Posts() {
 						{post.uid === currUser.uid && (
 							<div>
 								<button>Edit</button>
-								<button>Delete</button>
+								<button onClick={() => handleDeletePost(post.id)}>
+									Delete
+								</button>
 							</div>
 						)}
 					</div>

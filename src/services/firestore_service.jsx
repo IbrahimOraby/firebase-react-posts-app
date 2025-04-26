@@ -3,8 +3,7 @@ import {
 	doc,
 	setDoc,
 	addDoc,
-	getDocs,
-	getDoc,
+	deleteDoc,
 	collection,
 	serverTimestamp,
 	onSnapshot,
@@ -37,7 +36,7 @@ export const createPost = async (userData, content) => {
 		});
 		console.log("Post created successfully with uid:", userData.uid);
 	} catch (error) {
-		console.log("Error creating post", error);
+		console.error("Error creating post", error);
 	}
 };
 
@@ -55,6 +54,14 @@ export const getPosts = (callback) => {
 
 		return unsub;
 	} catch (error) {
-		console.log("Error retrieving posts", error);
+		console.error("Error retrieving posts", error);
+	}
+};
+
+export const deletePost = async (pid) => {
+	try {
+		await deleteDoc(doc(db, "posts", pid));
+	} catch (error) {
+		console.error("Error", error);
 	}
 };
