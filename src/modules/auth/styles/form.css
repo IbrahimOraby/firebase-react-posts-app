@@ -19,3 +19,15 @@
 	align-items: center;
 	gap: 1em;
 }
+
+.auth-form {
+	button {
+		background-color: #4caf50;
+		color: white;
+		border: none;
+		padding: 0.5rem 1rem;
+		border-radius: 6px;
+		cursor: pointer;
+		font-weight: bold;
+	}
+}

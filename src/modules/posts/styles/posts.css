@@ -1,0 +1,124 @@
+p {
+	padding: 0;
+	margin: 0;
+}
+.posts-container {
+	padding-inline: 4em;
+}
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #4caf50;
+	padding: 1rem;
+	color: white;
+	border-radius: 8px;
+	margin-bottom: 2rem;
+}
+
+.header button {
+	background-color: white;
+	color: #4caf50;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.header button:hover {
+	background-color: #f1f1f1;
+}
+
+.add-posts {
+	margin-bottom: 2rem;
+}
+
+.add-posts h2 {
+	margin-bottom: 0.5rem;
+}
+
+.add-posts form {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.add-posts input {
+	flex: 1;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+}
+
+.add-posts button {
+	background-color: #4caf50;
+	color: white;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.add-posts button:hover {
+	background-color: #45a049;
+}
+
+.posts-feed {
+	margin-top: 2rem;
+}
+
+.posts-feed h2 {
+	margin-bottom: 1rem;
+}
+
+.posts-feed div:not(.btns-container) {
+	background-color: #f9f9f9;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+}
+
+.posts-feed > div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.posts-feed input {
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+}
+
+.posts-feed button {
+	margin-right: 0.5rem;
+	background-color: #2196f3;
+	color: white;
+	border: none;
+	padding: 0.4rem 0.8rem;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 0.9rem;
+}
+
+.posts-feed button:hover {
+	background-color: #1976d2;
+}
+
+.posts-feed button:last-child {
+	background-color: #f44336;
+}
+
+.posts-feed button:last-child:hover {
+	background-color: #d32f2f;
+}
+
+.posts-feed button.save-btn {
+	background-color: #4caf50;
+}
+.posts-feed button.save-btn:hover {
+	background-color: #45a049;
+}

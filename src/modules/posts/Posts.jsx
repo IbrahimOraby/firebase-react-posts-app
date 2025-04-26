@@ -8,6 +8,7 @@ import {
 	updatePost
 } from "../../services/firestore_service";
 import { auth } from "../../firebaseConfig";
+import "./styles/posts.css";
 
 export default function Posts() {
 	const [postContent, setPostContent] = useState("");
@@ -56,53 +57,54 @@ export default function Posts() {
 
 	return (
 		<>
-			<div>
-				<h2>Welcome,</h2>
-				<p>If you wanna logout</p>
-				<button onClick={handleLogout}>Logout</button>
-			</div>
-			<hr />
-			<div>
-				<h2>Add a Post</h2>
-				<form onSubmit={handlePostSubmit}>
-					<input
-						type="text"
-						placeholder="What's on your mind?"
-						value={postContent}
-						onChange={(e) => setPostContent(e.target.value)}
-					/>
-					<button type="submit">Add Post</button>
-				</form>
-			</div>
-			<hr />
-			<div>
-				<h2>Posts Feed</h2>
-				{posts.map((post) => (
-					<div key={post.id}>
-						{editingPostId === post.id ? (
-							<>
-								<input
-									type="text"
-									value={editedContent}
-									onChange={(e) => setEditedContent(e.target.value)}
-								/>
-								<button onClick={handleSaveClick}>Save</button>
-							</>
-						) : (
-							<>
-								<p>{post.postContent}</p>
-								{post.uid === currUser.uid && (
-									<div>
-										<button onClick={() => handleEditPost(post)}>Edit</button>
-										<button onClick={() => handleDeletePost(post.id)}>
-											Delete
-										</button>
-									</div>
-								)}
-							</>
-						)}
-					</div>
-				))}
+			<div className="posts-container">
+				<div className="header">
+					<h2>Welcome</h2>
+					<button onClick={handleLogout}>Logout</button>
+				</div>
+				<div className="add-posts">
+					<h2>Add a Post</h2>
+					<form onSubmit={handlePostSubmit}>
+						<input
+							type="text"
+							placeholder="What's on your mind?"
+							value={postContent}
+							onChange={(e) => setPostContent(e.target.value)}
+						/>
+						<button type="submit">Add Post</button>
+					</form>
+				</div>
+				<div className="posts-feed">
+					<h2>Posts Feed</h2>
+					{posts.map((post) => (
+						<div key={post.id}>
+							{editingPostId === post.id ? (
+								<>
+									<input
+										type="text"
+										value={editedContent}
+										onChange={(e) => setEditedContent(e.target.value)}
+									/>
+									<button className="save-btn" onClick={handleSaveClick}>
+										Save
+									</button>
+								</>
+							) : (
+								<>
+									<p>{post.postContent}</p>
+									{post.uid === currUser.uid && (
+										<div className="btns-container">
+											<button onClick={() => handleEditPost(post)}>Edit</button>
+											<button onClick={() => handleDeletePost(post.id)}>
+												Delete
+											</button>
+										</div>
+									)}
+								</>
+							)}
+						</div>
+					))}
+				</div>
 			</div>
 		</>
 	);
