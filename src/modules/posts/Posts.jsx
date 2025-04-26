@@ -4,7 +4,8 @@ import { logoutUser } from "../../services/auth_service";
 import {
 	createPost,
 	getPosts,
-	deletePost
+	deletePost,
+	updatePost
 } from "../../services/firestore_service";
 import { auth } from "../../firebaseConfig";
 
@@ -13,6 +14,8 @@ export default function Posts() {
 	const navigate = useNavigate();
 	const currUser = auth.currentUser;
 	const [posts, setPosts] = useState([]);
+	const [editingPostId, setEditingPostId] = useState(null);
+	const [editedContent, setEditedContent] = useState("");
 
 	const handleLogout = async () => {
 		await logoutUser();
@@ -31,6 +34,15 @@ export default function Posts() {
 
 	const handleDeletePost = (pid) => {
 		deletePost(pid);
+	};
+	const handleEditPost = (post) => {
+		setEditingPostId(post.id);
+		setEditedContent(post.postContent);
+	};
+	const handleSaveClick = async () => {
+		await updatePost(editingPostId, { postContent: editedContent });
+		setEditingPostId(null);
+		setEditedContent("");
 	};
 
 	useEffect(() => {
@@ -51,7 +63,7 @@ export default function Posts() {
 			</div>
 			<hr />
 			<div>
-				<h2>Post</h2>
+				<h2>Add a Post</h2>
 				<form onSubmit={handlePostSubmit}>
 					<input
 						type="text"
@@ -64,17 +76,30 @@ export default function Posts() {
 			</div>
 			<hr />
 			<div>
-				<h2>POSTS</h2>
+				<h2>Posts Feed</h2>
 				{posts.map((post) => (
 					<div key={post.id}>
-						<p>{post.postContent}</p>
-						{post.uid === currUser.uid && (
-							<div>
-								<button>Edit</button>
-								<button onClick={() => handleDeletePost(post.id)}>
-									Delete
-								</button>
-							</div>
+						{editingPostId === post.id ? (
+							<>
+								<input
+									type="text"
+									value={editedContent}
+									onChange={(e) => setEditedContent(e.target.value)}
+								/>
+								<button onClick={handleSaveClick}>Save</button>
+							</>
+						) : (
+							<>
+								<p>{post.postContent}</p>
+								{post.uid === currUser.uid && (
+									<div>
+										<button onClick={() => handleEditPost(post)}>Edit</button>
+										<button onClick={() => handleDeletePost(post.id)}>
+											Delete
+										</button>
+									</div>
+								)}
+							</>
 						)}
 					</div>
 				))}

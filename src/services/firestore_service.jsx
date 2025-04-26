@@ -4,10 +4,12 @@ import {
 	setDoc,
 	addDoc,
 	deleteDoc,
+	updateDoc,
 	collection,
 	serverTimestamp,
 	onSnapshot,
-	query
+	query,
+	orderBy
 } from "firebase/firestore";
 import { app } from "../firebaseConfig"; // make sure you have firebase initialized here
 
@@ -42,7 +44,10 @@ export const createPost = async (userData, content) => {
 
 export const getPosts = (callback) => {
 	try {
-		const postsQuery = query(collection(db, "posts"));
+		const postsQuery = query(
+			collection(db, "posts"),
+			orderBy("createdAt", "desc")
+		);
 
 		const unsub = onSnapshot(postsQuery, (snapshot) => {
 			const postsArr = snapshot.docs.map((doc) => ({
@@ -62,6 +67,14 @@ export const deletePost = async (pid) => {
 	try {
 		await deleteDoc(doc(db, "posts", pid));
 	} catch (error) {
-		console.error("Error", error);
+		console.error("Error: ", error);
+	}
+};
+
+export const updatePost = async (pid, updatedData) => {
+	try {
+		await updateDoc(doc(db, "posts", pid), updatedData);
+	} catch (error) {
+		console.error("Error: ", error);
 	}
 };
