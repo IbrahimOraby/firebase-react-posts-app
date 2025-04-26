@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../../services/auth_service";
 import "../styles/form.css";
+import { createUser } from "../../../services/firestore_service";
 
 export default function SignUpForm() {
 	const [email, setEmail] = useState("");
@@ -12,7 +13,15 @@ export default function SignUpForm() {
 
 	const handleSignUp = async (userName, email, password) => {
 		try {
-			await registerUser(userName, email, password);
+			const userCredential = await registerUser(userName, email, password);
+			const uid = userCredential.user.uid;
+
+			await createUser({
+				uid,
+				email,
+				displayName: userName // Ensure your createUser expects this structure
+			});
+
 			alert("You signed up successfully");
 			navigate("/posts");
 		} catch (err) {
@@ -22,7 +31,7 @@ export default function SignUpForm() {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		handleSignUp(email, password);
+		handleSignUp(userName, email, password);
 	};
 	return (
 		<>
