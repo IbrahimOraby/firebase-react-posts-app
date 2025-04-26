@@ -3,8 +3,12 @@ import {
 	doc,
 	setDoc,
 	addDoc,
+	getDocs,
+	getDoc,
 	collection,
-	serverTimestamp
+	serverTimestamp,
+	onSnapshot,
+	query
 } from "firebase/firestore";
 import { app } from "../firebaseConfig"; // make sure you have firebase initialized here
 
@@ -24,7 +28,6 @@ export const createUser = async (userData) => {
 };
 
 export const createPost = async (userData, content) => {
-	console.log(userData);
 	try {
 		await addDoc(collection(db, "posts"), {
 			uid: userData.uid,
@@ -35,5 +38,23 @@ export const createPost = async (userData, content) => {
 		console.log("Post created successfully with uid:", userData.uid);
 	} catch (error) {
 		console.log("Error creating post", error);
+	}
+};
+
+export const getPosts = (callback) => {
+	try {
+		const postsQuery = query(collection(db, "posts"));
+
+		const unsub = onSnapshot(postsQuery, (snapshot) => {
+			const postsArr = snapshot.docs.map((doc) => ({
+				id: doc.id,
+				...doc.data()
+			}));
+			callback(postsArr);
+		});
+
+		return unsub;
+	} catch (error) {
+		console.log("Error retrieving posts", error);
 	}
 };

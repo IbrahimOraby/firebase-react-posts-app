@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { logoutUser } from "../../services/auth_service";
-import { createPost } from "../../services/firestore_service";
+import { createPost, getPosts } from "../../services/firestore_service";
 import { auth } from "../../firebaseConfig";
 
 export default function Posts() {
 	const [postContent, setPostContent] = useState("");
 	const navigate = useNavigate();
+	const currUser = auth.currentUser;
+	const [posts, setPosts] = useState([]);
 
 	const handleLogout = async () => {
 		await logoutUser();
@@ -15,15 +17,22 @@ export default function Posts() {
 
 	const handlePostSubmit = async (e) => {
 		e.preventDefault();
-		const user = auth.currentUser;
-		if (user) {
-			console.log(user);
-			await createPost(user, postContent);
+		if (currUser) {
+			await createPost(currUser, postContent);
 			setPostContent("");
 		} else {
 			console.error("No user signed in");
 		}
 	};
+
+	useEffect(() => {
+		const unsubscribe = getPosts((postsData) => {
+			setPosts(postsData);
+		});
+
+		//clean up
+		return () => unsubscribe();
+	});
 
 	return (
 		<>
@@ -44,6 +53,21 @@ export default function Posts() {
 					/>
 					<button type="submit">Add Post</button>
 				</form>
+			</div>
+			<hr />
+			<div>
+				<h2>POSTS</h2>
+				{posts.map((post) => (
+					<div key={post.id}>
+						<p>{post.postContent}</p>
+						{post.uid === currUser.uid && (
+							<div>
+								<button>Edit</button>
+								<button>Delete</button>
+							</div>
+						)}
+					</div>
+				))}
 			</div>
 		</>
 	);
