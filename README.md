@@ -1,12 +1,59 @@
-# React + Vite
+# 📝 Mini Posts App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React + Firebase app that allows users to:
 
-Currently, two official plugins are available:
+- Add new posts
+- Edit their own posts
+- Delete their own posts
+- View all posts in a live feed
+- Logout from their session
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Authentication** (basic user session)
+- **Create** a new post
+- **Edit** a post (only your own posts)
+- **Delete** a post (only your own posts)
+- **Real-time updates** using Firestore's `onSnapshot`
+- **Clean UI** with simple and responsive design
+
+---
+
+## 🛠️ Tech Stack
+
+- **React.js** (Frontend)
+- **Firebase Firestore** (Database)
+- **Firebase Authentication** (for user sessions)
+
+---
+
+## ⚙️ How to Run Locally
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-username/posts-app.git
+   cd posts-app
+
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up Firebase**
+
+- Create a Firebase project.
+- Enable Firestore Database.
+- Enable Authentication (e.g., Email/Password or Anonymous).
+- Get your Firebase config and paste it inside your project.
+
+4. **Run the app**
+
+   ```bash
+   npm run dev
+   ```
